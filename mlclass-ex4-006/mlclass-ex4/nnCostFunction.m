@@ -67,9 +67,10 @@ yVec=zeros(m,num_labels);
 for i=1:num_labels
   yVec(:,i)=y==i;
 end
-%J = 1/m * (-y' * log(sigmoid(X*theta)) - (1-y)' * log(1 - sigmoid(X*theta))) + lambda/(2*m) * theta(2:size(theta))'*theta(2:size(theta));
+
 output = sigmoid([ones(m,1) sigmoid(X * Theta1')] * Theta2');
-J = 1/m * sum(sum(-yVec .* log(output) - (1-yVec) .* log(1 - output)))
+J = 1/m * sum(sum(-yVec .* log(output) - (1-yVec) .* log(1 - output))) + ...
+  lambda/(2*m) * (sum(sum(Theta1(:,2:size(Theta1,2)).^2)) + sum(sum(Theta2(:,2:size(Theta2,2)).^2)));
 
 % -------------------------------------------------------------
 
